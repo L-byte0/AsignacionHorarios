@@ -31,6 +31,7 @@ public class Aulas extends javax.swing.JFrame {
             int res = ps.executeUpdate();
             if (res > 0) {
                 JOptionPane.showMessageDialog(null, "Registro Guardado");
+                continuar();
 
             } else {
                 JOptionPane.showMessageDialog(null, "Error!");
@@ -42,6 +43,7 @@ public class Aulas extends javax.swing.JFrame {
             //------------------Cierre de la exeption------------------------------
         } catch (Exception e) {
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "¡Ocurrio un error! Verifique todos los campos");
         }
         //----------------------------------------------------------------------
     
@@ -126,7 +128,7 @@ public class Aulas extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setText("Grupo");
 
-        btnContinuar.setText("Continuar");
+        btnContinuar.setText("Insertar y continuar");
         btnContinuar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnContinuarActionPerformed(evt);
@@ -194,10 +196,13 @@ public class Aulas extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbxGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6))
-                                .addGap(81, 81, 81)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnContinuar)
-                                    .addComponent(btnRegresar)))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(81, 81, 81)
+                                        .addComponent(btnRegresar))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(58, 58, 58)
+                                        .addComponent(btnContinuar))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jLabel3)))
@@ -265,7 +270,6 @@ public class Aulas extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         seleccionarUbicacion();
-        continuar();
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed

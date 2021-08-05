@@ -1,5 +1,59 @@
 package asignacionhorarios;
+
+import static asignacionhorarios.conexion.getConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+
 public class CargaDocente extends javax.swing.JFrame {
+    
+    PreparedStatement ps;
+    ResultSet rs;
+    
+    public void continuar(){
+        Horario form = new Horario();
+        form.setVisible(true);
+        this.dispose();
+    }
+    //Metodo para insertar los datos desde el boton aceptar
+    public void insertar(){
+        Connection con = null;
+
+        try {
+            con = getConnection();
+            ps = con.prepareStatement("INSERT INTO cargadocente (seguro, nombre, asignatura, horas, tipohoras, horasefectivas, horalibre, totalhoras) VALUES(?,?,?,?,?,?,?,?)");
+            
+            ps.setString(1, txtseguro.getText());
+            ps.setString(2, txtnombre.getText());
+            ps.setString(3, txtasignatura.getText());
+            ps.setString(4, cbxHoras.getSelectedItem().toString());
+            ps.setString(5, cbxtipoHoras.getSelectedItem().toString());
+            ps.setString(6, txtHorasEfectivas.getText());
+            ps.setString(7, txtHoraLibre.getText());
+            ps.setString(8, txtTotalHoras.getText());
+            
+            
+            int res=ps.executeUpdate();
+            
+            if(res>0){
+                JOptionPane.showMessageDialog(null, "Registro Guardado");
+                continuar();
+            }else{
+                JOptionPane.showMessageDialog(null, "Error!");
+            }
+            
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "¡Ocurrio un error! Verifique todos los campos");
+        }
+        
+        
+    } 
+    
     public CargaDocente() {
         initComponents();
         setLocationRelativeTo(null);
@@ -13,31 +67,29 @@ public class CargaDocente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtseguro = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtnombre = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtasignatura = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        choice1 = new java.awt.Choice();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtHoraLibre = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtHorasEfectivas = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        txtTotalHoras = new javax.swing.JTextField();
+        btnAceptar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        cbxtipoHoras = new javax.swing.JComboBox<>();
+        cbxHoras = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,16 +118,18 @@ public class CargaDocente extends javax.swing.JFrame {
 
         jLabel4.setText("S.S");
 
+        txtseguro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtseguroActionPerformed(evt);
+            }
+        });
+
         jLabel5.setText("Nombre Completo");
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel6.setText("Materia Asignada");
 
         jLabel7.setText("Asignatura");
-
-        jButton1.setText("Agregar");
-
-        jButton2.setText("Quitar");
 
         jLabel8.setText("Horas");
 
@@ -96,21 +150,21 @@ public class CargaDocente extends javax.swing.JFrame {
 
         jLabel11.setText("Horas libres");
 
-        jTextField5.setText("2");
-
         jLabel12.setText("Horas efectivas");
-
-        jTextField6.setText("16");
 
         jLabel13.setForeground(new java.awt.Color(204, 0, 0));
         jLabel13.setText("Total de Horas ");
 
-        jTextField7.setText("18");
-
-        jButton3.setText("Aceptar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        txtTotalHoras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                txtTotalHorasActionPerformed(evt);
+            }
+        });
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
             }
         });
 
@@ -120,6 +174,10 @@ public class CargaDocente extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
+
+        cbxtipoHoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "V" }));
+
+        cbxHoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,34 +189,11 @@ public class CargaDocente extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtseguro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(choice1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel6)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(txtnombre, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +202,24 @@ public class CargaDocente extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jSeparator1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jSeparator2))))
+                            .addComponent(jSeparator2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtasignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxtipoHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -175,22 +227,22 @@ public class CargaDocente extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtHorasEfectivas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3)
+                                .addComponent(btnAceptar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton4))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtHoraLibre, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtTotalHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -204,9 +256,9 @@ public class CargaDocente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtseguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,17 +266,14 @@ public class CargaDocente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtasignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton2)
-                        .addComponent(jLabel8)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9))
-                    .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(cbxtipoHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,14 +282,14 @@ public class CargaDocente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoraLibre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHorasEfectivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTotalHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(btnAceptar)
                     .addComponent(jButton4)))
         );
 
@@ -258,17 +307,28 @@ public class CargaDocente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Horario form = new Horario();
-        form.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+
+        try{
+            insertar();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         Aulas form = new Aulas();
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtseguroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtseguroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtseguroActionPerformed
+
+    private void txtTotalHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalHorasActionPerformed
+        
+    }//GEN-LAST:event_txtTotalHorasActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -279,10 +339,9 @@ public class CargaDocente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Choice choice1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JComboBox<String> cbxHoras;
+    private javax.swing.JComboBox<String> cbxtipoHoras;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -302,12 +361,11 @@ public class CargaDocente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField txtHoraLibre;
+    private javax.swing.JTextField txtHorasEfectivas;
+    private javax.swing.JTextField txtTotalHoras;
+    private javax.swing.JTextField txtasignatura;
+    private javax.swing.JTextField txtnombre;
+    private javax.swing.JTextField txtseguro;
     // End of variables declaration//GEN-END:variables
 }

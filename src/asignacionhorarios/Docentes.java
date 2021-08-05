@@ -13,6 +13,12 @@ public class Docentes extends javax.swing.JFrame {
     PreparedStatement ps;
     ResultSet rs;
     
+    public void continuar(){
+        Asignaturas form = new Asignaturas();
+        form.setVisible(true);
+        this.dispose();
+    }
+    
     private void limpiarCaja(){
         txtCedula.setText(null);
         txtCedulaB.setText(null);
@@ -56,7 +62,6 @@ public class Docentes extends javax.swing.JFrame {
         txtApellido = new javax.swing.JTextField();
         txtSexo = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
-        btnContinuar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -110,17 +115,10 @@ public class Docentes extends javax.swing.JFrame {
 
         jLabel13.setText("Sexo:");
 
-        btnSave.setText("Insertar");
+        btnSave.setText("Insertar y continuar");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
-            }
-        });
-
-        btnContinuar.setText("Continuar");
-        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnContinuarActionPerformed(evt);
             }
         });
 
@@ -138,7 +136,7 @@ public class Docentes extends javax.swing.JFrame {
             }
         });
 
-        btnModificar.setText("Modificar");
+        btnModificar.setText("Modificar y continuar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -194,40 +192,36 @@ public class Docentes extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnSave)
-                                .addGap(18, 18, 18))
-                            .addComponent(jLabel13))
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                    .addComponent(txtSexo))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnContinuar)
-                                .addGap(125, 125, 125))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel10)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel12)
+                                        .addComponent(jLabel11))
+                                    .addComponent(jLabel13))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(btnSave)
+                                .addGap(41, 41, 41)
+                                .addComponent(jButton3)))
+                        .addGap(0, 68, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(180, 180, 180)
                         .addComponent(jLabel9)
-                        .addGap(91, 91, 91))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnClear)
-                .addGap(28, 28, 28)
-                .addComponent(jButton3)
-                .addGap(32, 32, 32))
+                .addGap(150, 150, 150))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +272,6 @@ public class Docentes extends javax.swing.JFrame {
                         .addGap(13, 13, 13)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
-                            .addComponent(btnContinuar)
                             .addComponent(btnSave)))
                     .addComponent(txtRegistros))
                 .addGap(18, 18, 18)
@@ -317,6 +310,7 @@ public class Docentes extends javax.swing.JFrame {
             if (res > 0) {
                 JOptionPane.showMessageDialog(null, "Registro modificado");
                 limpiarCaja();
+                continuar();
 
             } else {
                 JOptionPane.showMessageDialog(null, "¡Error al modificar!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -327,6 +321,8 @@ public class Docentes extends javax.swing.JFrame {
 
         } catch (Exception e) {
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "¡Ocurrio un error! Verifique todos los campos");
+            
         }
     }
     
@@ -345,6 +341,7 @@ public class Docentes extends javax.swing.JFrame {
             if(res>0){
                 JOptionPane.showMessageDialog(null, "Registro Guardado");
                 limpiarCaja();
+                continuar();
                 
             }else{
                 JOptionPane.showMessageDialog(null, "Error!");
@@ -355,6 +352,7 @@ public class Docentes extends javax.swing.JFrame {
 
         } catch (Exception e) {
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "¡Ocurrio un error! Verifique todos los campos");
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -383,12 +381,6 @@ public class Docentes extends javax.swing.JFrame {
             System.out.println(e);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        Asignaturas form = new Asignaturas();
-        form.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         System.exit(0);
@@ -420,7 +412,6 @@ public class Docentes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
-    private javax.swing.JButton btnContinuar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton jButton3;
