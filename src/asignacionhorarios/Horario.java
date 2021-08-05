@@ -16,6 +16,7 @@ public class Horario extends javax.swing.JFrame {
      */
     public Horario() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -40,9 +41,9 @@ public class Horario extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnFin = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,10 +52,7 @@ public class Horario extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel1.setText("Asignación de Horario a Grupo");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Denisse Guadarrama\\Desktop\\AsignacionHorarios\\Salir.jpg")); // NOI18N
         jLabel2.setText("Salir");
-
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Denisse Guadarrama\\Desktop\\AsignacionHorarios\\Horario.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -104,11 +102,21 @@ public class Horario extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Aceptar");
+        btnFin.setText("Aceptar");
+        btnFin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Modificar");
 
-        jButton3.setText("Cancelar");
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,9 +138,9 @@ public class Horario extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addComponent(jButton2)
                         .addGap(349, 349, 349)
-                        .addComponent(jButton1)
+                        .addComponent(btnFin)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
+                        .addComponent(btnRegresar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(jLabel5)
@@ -166,8 +174,8 @@ public class Horario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton3)))
+                        .addComponent(btnFin)
+                        .addComponent(btnRegresar)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -184,6 +192,16 @@ public class Horario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnFinActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        CargaDocente form = new CargaDocente();
+        form.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,9 +239,9 @@ public class Horario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnFin;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
