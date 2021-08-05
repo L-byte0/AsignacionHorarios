@@ -15,25 +15,13 @@ public class Docentes extends javax.swing.JFrame {
     
     private void limpiarCaja(){
         txtCedula.setText(null);
+        txtCedulaB.setText(null);
         txtNombre.setText(null);
+        txtNombreB.setText(null);
         txtApellido.setText(null);
+        txtApellidoB.setText(null);
         txtSexo.setText(null);
-        
-        Connection con=null;
-        try{
-            con = getConnection();
-            ps = con.prepareStatement("SELECT nombre, apellido FROM docentes");
-            rs=ps.executeQuery();
-            
-            if(rs.next()){
-                txtRegistros.setText(rs.getString("nombre")+rs.getString("apellido"));
-            }else{
-                JOptionPane.showMessageDialog(null, "Clave inexistente");
-            }
-            
-        }catch(Exception e){
-            System.out.println(e);
-        }
+        txtSexoB.setText(null);
     }
 
     public Docentes() {
@@ -47,7 +35,6 @@ public class Docentes extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCedulaB = new javax.swing.JTextField();
@@ -72,7 +59,7 @@ public class Docentes extends javax.swing.JFrame {
         btnContinuar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         txtRegistros = new javax.swing.JTextField();
         btnClear = new javax.swing.JButton();
 
@@ -81,20 +68,14 @@ public class Docentes extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Docentes");
-
-        jLabel2.setText("Salir");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(181, 181, 181)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,15 +83,12 @@ public class Docentes extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel3.setText("Datos Del Docente:");
 
-        jLabel4.setText("Cédula:");
+        jLabel4.setText("Seguro social:");
 
         jLabel5.setText("Nombre:");
 
@@ -160,7 +138,12 @@ public class Docentes extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Aplicar");
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Limpiar");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -184,28 +167,26 @@ public class Docentes extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6))
                                         .addGap(30, 30, 30)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtCedulaB, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(txtNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(txtApellidoB, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(txtNombreB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jLabel7)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(txtSexoB, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(txtCedulaB, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                .addComponent(txtSexoB, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtApellidoB, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton5)))))
+                                .addGap(292, 292, 292)
+                                .addComponent(jButton4)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -269,7 +250,7 @@ public class Docentes extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtApellidoB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(btnModificar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -319,6 +300,36 @@ public class Docentes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void modificar() {
+        Connection con = null;
+
+        try {
+            con = getConnection();
+            ps = con.prepareStatement("UPDATE docentes SET nombre=?, apellido=?, sexo=? WHERE cedula=?");
+            
+            ps.setString(1, txtNombreB.getText());
+            ps.setString(2, txtApellidoB.getText());
+            ps.setString(3, txtSexoB.getText());
+            ps.setString(4, txtCedulaB.getText());
+
+            int res = ps.executeUpdate();
+            
+            if (res > 0) {
+                JOptionPane.showMessageDialog(null, "Registro modificado");
+                limpiarCaja();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "¡Error al modificar!", "Error", JOptionPane.ERROR_MESSAGE);
+                limpiarCaja();
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         Connection con = null;
 
@@ -383,6 +394,10 @@ public class Docentes extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        modificar();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -406,16 +421,15 @@ public class Docentes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnContinuar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
